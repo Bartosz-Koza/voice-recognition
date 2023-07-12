@@ -2,12 +2,13 @@ import speech_recognition
 import pyttsx3
 import os
 from gtts import gTTS
-from sound import Sound
-
+import webbrowser
 en = 'en'
 
 recognizer = speech_recognition.Recognizer()
 engine = pyttsx3.init()
+voices = engine.getProperty('voices') 
+engine.setProperty('rate', 125)
 while True:
     try:
 
@@ -18,10 +19,18 @@ while True:
             text = recognizer.recognize_google(audio)
             text = text.lower()
             
-            if text == "mute":
-                volume.SetMute(0, None)
-                # engine.say("nothing")
-                # engine.runAndWait()
+            if text == 'change language to polish':
+                en = 'pl'
+                engine.say("Język zmieniony")
+                engine.runAndWait()
+                
+
+
+            if text == "open web":
+                engine.say("Opening")
+                engine.runAndWait()
+                webbrowser.open("https://recrash.vercel.app/map",  new=2)
+                
 
             print(f"Regognized {text}")
     except speech_recognition.UnknownValueError():
